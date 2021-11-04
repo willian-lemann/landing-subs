@@ -1,37 +1,23 @@
-import React from 'react';
+import Stripe from 'stripe';
+import { GetStaticProps } from 'next';
+
 import { Card } from '../components/Card';
 import { Header } from '../components/Header';
+import { stripe } from '../config/stripe';
 
-import { Container, Content, TitleContainer, Title, HightlightText, Subtitle, CardList } from '../styles/home';
+import { Container, Content, TitleContainer, Title, HightlightText, Subtitle } from './styles';
+import { CardList } from '../components/CardList';
 
-const cards = [
-  {
-    id: 1,
-    plan: 'Basic',
-    amount: 10,
-    benefits: ['Get started with messaging', 'Get started with messaging', 'Get started with messaging'],
-    compact: true,
-    isPopular: false,
-  },
-  {
-    id: 2,
-    plan: 'Startup',
-    amount: 24,
-    benefits: ['Get started with messaging', 'Get started with messaging', 'Get started with messaging'],
-    compact: false,
-    isPopular: true,
-  },
-  {
-    id: 3,
-    plan: 'Enterprise',
-    amount: 35,
-    benefits: ['Get started with messaging ', 'Get started with messaging', 'Get started with messaging'],
-    compact: true,
-    isPopular: false,
-  },
-];
 
-const Home = () => {
+
+interface HomeProps {
+  products: Array<{
+    id: string;
+    amount: number;
+  }>;
+}
+
+export default function Home({ products }: HomeProps) {
   return (
     <Container>
       <Header />
@@ -44,14 +30,29 @@ const Home = () => {
           <Subtitle>Choose your plan that works best for you and your teams</Subtitle>
         </TitleContainer>
 
-        <CardList>
-          {cards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))}
-        </CardList>
+        <CardList products={products} />
       </Content>
     </Container>
   );
-};
+}
 
-export default Home;
+export const getStaticProps: GetStaticProps = async () => {
+  const prices = await stripe.prices.list();
+
+  const products = prices.data.map((price: Stripe.Price) => {
+    return {
+      id: price.id,
+      amount: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format((price.unit_amount as number) / 100),
+    };
+  });
+
+  return {
+    props: {
+      products,
+    },
+    revalidate: 60 * 60 * 24, // 24 hours
+  };
+};

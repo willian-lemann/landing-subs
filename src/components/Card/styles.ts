@@ -7,17 +7,17 @@ interface ContainerProps {
 }
 
 const leftCardBorderStyle = css`
-  border-top: 3px solid transparent;
-  border-left: 3px solid transparent;
+  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
+  border-left: 3px solid ${({ theme }) => theme.colors.tertiary};
   border-right: 0;
-  border-bottom: 3px solid transparent;
+  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
 `;
 
 const rightCardBorderStyle = css`
-  border-top: 3px solid transparent;
-  border-right: 3px solid transparent;
+  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
+  border-right: 3px solid ${({ theme }) => theme.colors.tertiary};
   border-left: 0;
-  border-bottom: 3px solid transparent;
+  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
 `;
 
 const leftCardBorderStyleOnHover = css`
@@ -31,14 +31,10 @@ const rightCardBorderStyleOnHover = css`
   border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
   border-right: 3px solid ${({ theme }) => theme.colors.tertiary};
   border-left: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary}; ;
+  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
 `;
 
 const middleCardBorderStyle = css`
-  border: 3px solid transparent;
-`;
-
-const middleCardBorderStyleOnHover = css`
   border: 3px solid ${({ theme }) => theme.colors.tertiary};
 `;
 
@@ -70,10 +66,6 @@ export const Container = styled.li<ContainerProps>`
     &:hover {
       ${rightCardBorderStyleOnHover}
     }
-  }
-
-  &:hover {
-    ${middleCardBorderStyleOnHover}
   }
 `;
 

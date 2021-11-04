@@ -32,7 +32,7 @@ export const HightlightText = styled.span`
 `;
 
 export const Title = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.heading}; 
+  font-size: ${({ theme }) => theme.fontSize.heading};
   font-family: ${({ theme }) => theme.fonts.primary};
 `;
 
@@ -42,12 +42,4 @@ export const Subtitle = styled.span`
   text-align: center;
   color: ${({ theme }) => theme.colors['black-400']};
   font-family: ${({ theme }) => theme.fonts.primary};
-`;
-
-export const CardList = styled.ul`
-  margin-top: 10rem;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
 `;

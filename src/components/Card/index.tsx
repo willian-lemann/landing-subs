@@ -23,7 +23,7 @@ import {
 
 interface CardProps {
   card: {
-    id: number;
+    id: string;
     plan: string;
     amount: number;
     benefits: Array<string>;

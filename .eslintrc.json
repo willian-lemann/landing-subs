@@ -3,14 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb",
-    "plugin:@typescript-eslint/recommended", 
-    "plugin:prettier/recommended",
-    "prettier"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "plugin:@typescript-eslint/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -32,9 +25,13 @@
     "no-use-before-define": "off",
     "prettier/prettier": "off",
     "@typescript-eslint/ban-types": "off",
+    "arrow-body-style": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "import/no-useless-path-segments": "off",
     "dot-notation": "off",
     "@typescript-eslint/no-empty-function": "off",
