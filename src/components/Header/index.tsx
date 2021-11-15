@@ -10,9 +10,9 @@ export const Header = () => {
       </LogoContainer>
 
       <NavContainer>
-        <Link href="">about</Link>
-        <Link href="">blog</Link>
-        <Link href="">contact</Link>
+        <Link href="#">About</Link>
+        <Link href="#">Blog</Link>
+        <Link href="#">Contact</Link>
       </NavContainer>
     </Container>
   );

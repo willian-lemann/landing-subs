@@ -1,20 +1,21 @@
-import { useTheme } from 'styled-components';
+import { useRouter } from 'next/router';
 
-import Basic from '../../assets/basic.svg';
-import Startup from '../../assets/startup.svg';
-import Enterprise from '../../assets/enterprise.svg';
+import basic from '../../assets/basic.svg';
+import startup from '../../assets/startup.svg';
+import nextLevel from '../../assets/nextLevel.svg';
 
 import {
   Container,
   Header,
+  Image,
   PlanHeaderInfo,
   PlanName,
   Amount,
   PerUser,
   BodyCard,
   BenefitItem,
+  CheckIcon,
   BenefitLabel,
-  Icon,
   ChoosePlanButton,
   PopularTag,
   AmountValue,
@@ -33,28 +34,34 @@ interface CardProps {
 }
 
 export const Card = ({ card }: CardProps) => {
-  const theme = useTheme();
+  const router = useRouter();
 
-  function getPlanLogo(plan: string) {
+  function handleGoToPlan(id: string) {
+    router.push(`/product/${id}`);
+  }
+
+  function getPlanImageSource(plan: 'Basic' | 'Startup' | 'Next Level') {
     const plans = {
-      Basic: <Basic />,
-      Startup: <Startup />,
-      Enterprise: <Enterprise />,
+      basic,
+      startup,
+      'next level': nextLevel,
     };
 
-    return plans[plan as 'Basic' | 'Startup' | 'Enterprise'];
+    return plans[plan.toLowerCase() as 'basic' | 'startup' | 'next level'];
   }
+
+  const imageSource = getPlanImageSource(card.plan as 'Basic' | 'Startup' | 'Next Level');
 
   return (
     <Container compact={card.compact}>
       <Header>
-        {getPlanLogo(card.plan)}
+        <Image src={imageSource} width={84} height={84} />
 
         <PlanHeaderInfo>
-          <PlanName compact={card.compact}>{card.plan}</PlanName>
+          <PlanName>{card.plan}</PlanName>
 
           <Amount>
-            R$ <AmountValue compact={card.compact}>{card.amount}</AmountValue> <PerUser>/ user</PerUser>
+            <AmountValue compact={card.compact}>{card.amount}</AmountValue> <PerUser>/ user</PerUser>
           </Amount>
         </PlanHeaderInfo>
 
@@ -63,14 +70,14 @@ export const Card = ({ card }: CardProps) => {
 
       <BodyCard>
         {card.benefits.map((benefit) => (
-          <BenefitItem key={benefit} compact={card.compact}>
-            <Icon size={24} color={card.compact ? theme.colors.black : theme.colors.white} />
+          <BenefitItem key={`${benefit}-${Math.random()}`} compact={card.compact}>
+            <CheckIcon />
             <BenefitLabel compact={card.compact}>{benefit}</BenefitLabel>
           </BenefitItem>
         ))}
       </BodyCard>
 
-      <ChoosePlanButton compact={card.compact}>
+      <ChoosePlanButton compact={card.compact} onClick={() => handleGoToPlan(card.id)}>
         Choose Plan <ButtonIcon size={30} />
       </ChoosePlanButton>
     </Container>

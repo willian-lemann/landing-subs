@@ -1,14 +1,11 @@
 import Stripe from 'stripe';
 import { GetStaticProps } from 'next';
 
-import { Card } from '../components/Card';
 import { Header } from '../components/Header';
-import { stripe } from '../config/stripe';
+import { stripe } from '../config/stripeClient';
 
-import { Container, Content, TitleContainer, Title, HightlightText, Subtitle } from './styles';
+import { Container, Content, TitleContainer, Title, HightlightText, Subtitle } from '../styles/home.styles';
 import { CardList } from '../components/CardList';
-
-
 
 interface HomeProps {
   products: Array<{
@@ -30,7 +27,7 @@ export default function Home({ products }: HomeProps) {
           <Subtitle>Choose your plan that works best for you and your teams</Subtitle>
         </TitleContainer>
 
-        <CardList products={products} />
+        <CardList key={Math.random()} products={products} />
       </Content>
     </Container>
   );

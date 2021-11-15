@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import NextImage from 'next/image';
 
 import { MdCheck, MdArrowForward } from 'react-icons/md';
 
@@ -6,66 +7,30 @@ interface ContainerProps {
   compact: boolean;
 }
 
-const leftCardBorderStyle = css`
-  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-left: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-right: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
-`;
-
-const rightCardBorderStyle = css`
-  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-right: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-left: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
-`;
-
-const leftCardBorderStyleOnHover = css`
-  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-left: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-right: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary}; ;
-`;
-
-const rightCardBorderStyleOnHover = css`
-  border-top: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-right: 3px solid ${({ theme }) => theme.colors.tertiary};
-  border-left: 0;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.tertiary};
-`;
-
-const middleCardBorderStyle = css`
-  border: 3px solid ${({ theme }) => theme.colors.tertiary};
-`;
-
 export const Container = styled.li<ContainerProps>`
-  height: ${({ compact }) => (compact ? '429px' : '499px')};
-  background-color: ${({ compact, theme }) => (compact ? theme.colors['light-gray'] : theme.colors.black)};
-  width: ${({ compact }) => (compact ? '400px' : '460px')};
+  height: auto;
+  min-height: 566px;
+  min-width: 440px;
+  max-width: 430px;
+  background-color: ${({ theme }) => theme.colors['black-400']};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: border-width 0.1s ease-in-out;
+  justify-content: space-between;
+  transition: outline 0.2s ease;
 
-  ${middleCardBorderStyle};
-
-  &:nth-child(1) {
-    border-radius: 20px 0 0 20px;
-    ${({ compact }) => compact && leftCardBorderStyle}
-
-    &:hover {
-      ${leftCardBorderStyleOnHover}
-    }
+  &:hover {
+    outline: 3px solid ${({ theme }) => theme.colors.tertiary};
   }
 
-  &:nth-child(3) {
-    border-radius: 0 20px 20px 0;
-    ${({ compact }) => compact && rightCardBorderStyle}
-
-    &:hover {
-      ${rightCardBorderStyleOnHover}
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    &:nth-child(3) {
+      margin-bottom: 4rem;
     }
+
+    width: 90vw;
+    margin-bottom: 4rem;
   }
 `;
 
@@ -77,27 +42,24 @@ export const Header = styled.div`
   align-items: center;
 `;
 
+export const Image = styled(NextImage)``;
+
 export const PlanHeaderInfo = styled.section`
   margin-left: 1rem;
   display: flex;
   flex-direction: column;
 `;
 
-interface PlanNameProps {
-  compact: boolean;
-}
-
-export const PlanName = styled.span<PlanNameProps>`
+export const PlanName = styled.span`
   font-size: ${({ theme }) => theme.fontSize.body.xl};
   font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme, compact }) => (compact ? theme.colors.black : theme.colors.white)};
+  color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
 `;
 
 export const Amount = styled.strong`
   font-size: ${({ theme }) => theme.fontSize.body.md};
   font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme }) => theme.colors['black-400']};
   margin-top: 1rem;
 `;
 
@@ -108,13 +70,17 @@ interface AmountValueProps {
 export const AmountValue = styled.span<AmountValueProps>`
   font-size: ${({ compact }) => (compact ? '3rem' : '4rem')};
   font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme, compact }) => (compact ? theme.colors.black : theme.colors.white)};
+  color: ${({ theme }) => theme.colors.white};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 3rem;
+  }
 `;
 
 export const PerUser = styled.span`
   font-size: ${({ theme }) => theme.fontSize.body.lg};
   font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme }) => theme.colors['black-400']};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 interface PopularTag {
@@ -138,6 +104,11 @@ export const PopularTag = styled.span<PopularTag>`
   &:after {
     content: 'Popular';
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 85px;
+    font-size: ${({ theme }) => theme.fontSize.body.md};
+  }
 `;
 
 export const BodyCard = styled.ul`
@@ -155,7 +126,14 @@ export const BenefitItem = styled.li<BenefitItemProps>`
   align-items: center;
 `;
 
-export const Icon = styled(MdCheck)``;
+export const CheckIcon = styled(MdCheck).attrs(({ theme }) => {
+  return {
+    size: 24,
+    color: theme.colors.white,
+  };
+})`
+  min-width: 24px;
+`;
 
 interface BenefitLabelProps {
   compact: boolean;
@@ -163,9 +141,13 @@ interface BenefitLabelProps {
 
 export const BenefitLabel = styled.span<BenefitLabelProps>`
   margin-left: 1rem;
-  font-size: ${({ theme, compact }) => (compact ? theme.fontSize.body.lg : theme.fontSize.body.xl)};
+  font-size: ${({ theme }) => theme.fontSize.body.lg};
   font-family: ${({ theme }) => theme.fonts.primary};
-  color: ${({ theme, compact }) => (compact ? theme.colors['black-400'] : theme.colors.white)};
+  color: ${({ theme }) => theme.colors.white};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: ${({ theme }) => theme.fontSize.body.md};
+  }
 `;
 
 interface ChoosePlanButtonProps {
@@ -178,14 +160,20 @@ export const ChoosePlanButton = styled.button<ChoosePlanButtonProps>`
   background-color: ${({ theme }) => theme.colors.tertiary};
   margin-top: ${({ compact }) => (compact ? '1rem' : '2rem')};
   color: ${({ theme }) => theme.colors.white};
-  height: 70px;
+  height: 60px;
   width: auto;
   padding: 1rem 2rem;
+  margin: 3rem 0rem;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: filter 0.2s ease;
+
+  &:active {
+    filter: brightness(88%);
+  }
 `;
 
 export const ButtonIcon = styled(MdArrowForward)`
