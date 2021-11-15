@@ -30,6 +30,8 @@ export const Container = styled.li<ContainerProps>`
     }
 
     width: 90vw;
+    min-width: unset;
+    max-width: unset;
     margin-bottom: 4rem;
   }
 `;
